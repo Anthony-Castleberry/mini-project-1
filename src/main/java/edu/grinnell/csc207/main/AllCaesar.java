@@ -18,7 +18,7 @@ public class AllCaesar {
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
     if (args.length != 2) {
-      System.err.println([]);
+      System.err.println("not enough arguments");
     } // if
     if (args[0] != "encode" && args[0] != "decode") {
       System.err.println("Invalid option:" + args[0] + "valid options are 'encode' or 'decode'");

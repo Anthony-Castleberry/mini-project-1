@@ -3,7 +3,14 @@ package edu.grinnell.csc207.main;
 import java.io.PrintWriter;
 import edu.grinnell.csc207.util.CipherUtils;
 
-/** prints all the ceaserciphers possible using each indivdual lower case letter as a key.*/
+/**
+ * A project for CSC-207 2024fa
+ *  
+ * Prints all the ceaserciphers possible using 
+ * each indivdual lower case letter as a key.
+ * 
+ * @author Anthony Castleberry
+ */
 public class AllCaesar {
   /** runs the code to print out all the ceaserciphers.
    * @param args strings that correspond to text and encode/decode.

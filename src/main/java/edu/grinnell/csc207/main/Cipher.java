@@ -3,7 +3,14 @@ package edu.grinnell.csc207.main;
 import java.io.PrintWriter;
 import edu.grinnell.csc207.util.CipherUtils;
 
-/**encodes/decodes with a vigenere or ceaser cipher.*/
+
+/**
+ * A project for CSC-207 2024fa
+ *  
+ * encodes/decodes with a vigenere or ceaser cipher.
+ * 
+ * @author Anthony Castleberry
+ */
 public class Cipher {
 
   /**number of arguments expected.*/

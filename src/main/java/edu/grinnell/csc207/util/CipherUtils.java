@@ -1,6 +1,12 @@
 package edu.grinnell.csc207.util;
 
-/**Helper Methods to create ciphers.*/
+/**
+ * A project for CSC-207 2024fa
+ *  
+ * helper methods to create viginere and ceaser ciphers
+ * 
+ * @author Anthony Castleberry
+ */
 public class CipherUtils {
 
   /**whitespace ascii code*/

@@ -6,9 +6,9 @@ import edu.grinnell.csc207.util.CipherUtils;
 
 /**
  * A project for CSC-207 2024fa
- *  
- * encodes/decodes with a vigenere or ceaser cipher.
- * 
+ *
+ * encodes/decodes with a vigenere or caesar cipher.
+ *
  * @author Anthony Castleberry
  */
 public class Cipher {
@@ -16,37 +16,38 @@ public class Cipher {
   /**number of arguments expected.*/
   private static final int EXPECTED_NUM_PARAMS = 4;
 
+  /**number of arguments expected.*/
+  private static final int ASCII_UPPERBOUND = 122;
+
+  /**number of arguments expected.*/
+  private static final int ASCII_LOWERBOUND = 97;
+
   /** runs the code to do what cipher states.
    * @param args strings that correspond to encode/decode, cipher, text, and key.
    */
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
 
-    for (int j = 0; j < args.length; j++) {
-      pen.printf("args[%d] = \"%s\"\n", j, args[j]);
-    } // for
-
     if (args.length != EXPECTED_NUM_PARAMS) {
-      System.err.println("Incorrect number of parameters, 4 expected" + args.length + " recieved");
-    } // if
-
-    if (Cipher.doesinclude(args, "-vigenere") || Cipher.doesinclude(args, "-ceaser")) {
+      System.err.println("Error: incorrect number of parameters, 4 expected"
+        + args.length + " recieved");
+    } else if (Cipher.doesinclude(args, "-vigenere") || Cipher.doesinclude(args, "-caesar")) {
       String text;
+      text = findtext(args, "");
       String vkey;
       char ckey;
-      text = findtext(args, "");
 
       if (text.equals("")) {
         System.err.println("empty String invalid");
-      } //if
+      } // if
 
-      if (Cipher.doesinclude(args, "-ceaser")) {
+      if (!valid(text)) {
+        System.err.println("Error: invalid text, caesar keys need to be 1 chracter");
+      } else if (Cipher.doesinclude(args, "-caesar") && valid(text)) {
         ckey = Cipher.findkey(args);
         if (ckey == 'Z') {
-          System.err.println("Invalid key, ceaser keys need to be 1 chracter");
-        } // if
-
-        if (Cipher.doesinclude(args, "-encode")) {
+          System.err.println("Invalid key, caesar keys need to be 1 chracter");
+        } else if (Cipher.doesinclude(args, "-encode")) {
           pen.println(CipherUtils.caesarEncrypt(text, ckey));
         } else {
           if (Cipher.doesinclude(args, "-decode")) {
@@ -55,16 +56,12 @@ public class Cipher {
             System.err.println("invalid action, valid actions are either '-encode' or '-decode'");
           } // if
         } // if
-      } // if
-
-      if (Cipher.doesinclude(args, "-vigenere")) {
+      } else if (Cipher.doesinclude(args, "-vigenere") && valid(text)) {
         vkey = Cipher.findtext(args, text);
-        if (Cipher.doesinclude(args, "-encode")) {
-          if (vkey.length() > text.length()) {
-            pen.println(CipherUtils.vigenereEncrypt(vkey, text));
-          } else {
-            pen.println(CipherUtils.vigenereEncrypt(text, vkey));
-          } // if
+        if (!valid(vkey)) {
+          System.err.println("Error: invalid key");
+        } else if (Cipher.doesinclude(args, "-encode")) {
+          pen.println(CipherUtils.vigenereEncrypt(text, vkey));
         } else {
           if (Cipher.doesinclude(args, "-decode")) {
             if (vkey.length() > text.length()) {
@@ -76,8 +73,6 @@ public class Cipher {
             System.err.println("invalid action, valid actions are either '-encode' or '-decode'");
           } // if
         } // if
-      } else {
-        System.err.println("no cipher type specified, valid ciphers are '-viginere' and '-ceaser'");
       } // if
     } // if
     pen.close();
@@ -95,7 +90,8 @@ public class Cipher {
   private static String findtext(String[] para, String str) {
     for (int i = 0; i < EXPECTED_NUM_PARAMS; i++) {
       String word = para[i];
-      if (!(word.equals("-encode")) && !(word.equals("-decode")) && !(word.equals("-ceaser")) && !(word.equals("-vigenere"))) {
+      if (!(word.equals("-encode")) && !(word.equals("-decode"))
+        && !(word.equals("-caesar")) && !(word.equals("-vigenere"))) {
         if (word.length() > 1 && !(word.equals(str))) {
           return word;
         } // if
@@ -107,7 +103,8 @@ public class Cipher {
   private static char findkey(String[] para) {
     for (int i = 0; i < EXPECTED_NUM_PARAMS; i++) {
       String word = para[i];
-      if (!(word.equals("-encode")) && !(word.equals("-decode")) && !(word.equals("-cease")) && !(word.equals("-vigenere"))) {
+      if (!(word.equals("-encode")) && !(word.equals("-decode")) 
+        && !(word.equals("-cease")) && !(word.equals("-vigenere"))) {
         if (word.length() == 1) {
           return word.charAt(0);
         } // if
@@ -115,4 +112,13 @@ public class Cipher {
     } // for
     return 'Z';
   } // findkey
+
+  private static boolean valid(String str) {
+    for (int i = 0; i < str.length(); i++) {
+      if (str.charAt(i) < ASCII_LOWERBOUND || str.charAt(i) > ASCII_UPPERBOUND) {
+        return false;
+      } // if
+    } // for
+    return true;
+  } // valid
 } // Cipher

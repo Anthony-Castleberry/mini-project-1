@@ -1,16 +1,16 @@
 package edu.grinnell.csc207.util;
 
 /**
- * A project for CSC-207 2024fa
- *  
- * helper methods to create viginere and ceaser ciphers
- * 
+ * A project for CSC-207 2024fa.
+ *
+ * helper methods to create viginere and caesar ciphers
+ *
  * @author Anthony Castleberry
  */
 public class CipherUtils {
 
-  /**whitespace ascii code*/
-  private static final int WHITESPACE= 32;
+  /**whitespace ascii code.*/
+  private static final int WHITESPACE = 32;
 
   /**value that corrects the ASCII value so tha mod 26 works when making a char an int.*/
   private static final int ASCII_OFFSET_CHAR = 19;
@@ -43,36 +43,38 @@ public class CipherUtils {
   } // int2letter
 
 
-  /**encrypts a word with a letter according to the ceaser cipher.
+  /**encrypts a word with a letter according to the caesar cipher.
    * @param str word to be incrypted.
    * @param letter key.
+   * @return encrypted string.
   */
   public static String caesarEncrypt(String str, char letter) {
-    String Plaintext = str;
-    int len = Plaintext.length();
+    String plaintext = str;
+    int len = plaintext.length();
     int key = CipherUtils.letter2int(letter);
 
     char[] chararray = new char[len];
-    Plaintext.getChars(0, len, chararray, 0);
+    plaintext.getChars(0, len, chararray, 0);
     for (int i = 0; i < len; i++) {
       int n = CipherUtils.letter2int(chararray[i]);
       n += key;
       chararray[i] = CipherUtils.int2letter(n);
     } // for
     return String.copyValueOf(chararray);
-  } // ceaserEncrypt
+  } // caesarEncrypt
 
-  /**decrypts a word with a letter according to the ceaser cipher.
+  /**decrypts a word with a letter according to the caesar cipher.
    * @param str word to be decrypted.
    * @param letter key.
+   * @return decrypted string.
   */
   public static String caesarDecrypt(String str, char letter) {
-    String Ciphertext = str;
-    int len = Ciphertext.length();
+    String ciphertext = str;
+    int len = ciphertext.length();
     int key = CipherUtils.letter2int(letter);
 
     char[] chararray = new char[len];
-    Ciphertext.getChars(0, len, chararray, 0);
+    ciphertext.getChars(0, len, chararray, 0);
     for (int i = 0; i < len; i++) {
       int n = CipherUtils.letter2int(chararray[i]);
       n -= key;
@@ -82,7 +84,7 @@ public class CipherUtils {
       chararray[i] = CipherUtils.int2letter(n);
     } // for
     return String.copyValueOf(chararray);
-  } // ceaserDecrypt
+  } // caesarDecrypt
 
 
   /**encrypts a word with another word according to the viginere cipher.
